@@ -1,0 +1,28 @@
+node_modules
+
+# MongoDB data files (mantener directorio pero ignorar contenido)
+mongodb_data/*
+!mongodb_data/README.md
+
+# Logs
+*.log
+logs/
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# Build output
+dist/
+build/
+
+# IDE files
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db

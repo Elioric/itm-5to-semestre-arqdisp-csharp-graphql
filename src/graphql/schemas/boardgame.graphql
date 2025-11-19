@@ -1,0 +1,44 @@
+type Query {
+    getBoardGames: [BoardGame]
+    getBoardGame(id: ID!): BoardGame
+}
+
+type BoardGame {
+    _id: ID!
+    nombre: String!
+    minJugadores: Int!
+    maxJugadores: Int!
+    edadMinima: Int!
+    idioma: String!
+    dependenciaIdioma: DependenciaIdioma!
+}
+
+enum DependenciaIdioma {
+    NINGUNA
+    PARCIAL
+    TOTAL
+}
+
+type Mutation {
+    createBoardGame(boardGame: NewBoardGameInput!): String!
+    updateBoardGame(_id: ID!, boardGame: EditBoardGameInput!): String!
+    deleteBoardGame(_id: ID!): String!
+}
+
+input NewBoardGameInput {
+    nombre: String!
+    minJugadores: Int!
+    maxJugadores: Int!
+    edadMinima: Int!
+    idioma: String!
+    dependenciaIdioma: Int!
+}
+
+input EditBoardGameInput {
+    nombre: String
+    minJugadores: Int
+    maxJugadores: Int
+    edadMinima: Int
+    idioma: String
+    dependenciaIdioma: Int
+}

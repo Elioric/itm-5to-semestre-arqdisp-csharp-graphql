@@ -1,0 +1,58 @@
+type Query {
+    getUsers: [User]
+    getUser(id: ID!): User
+    getUsersByCountry(countryName: String!): [User]
+    getCountryInfo(countryName: String!): CountryInfo
+    getAllCountries: [CountryInfo]
+    validateCountry(countryName: String!): CountryValidationResult!
+}
+
+type User {
+    _id: ID!
+    nombre: String!
+    email: String!
+    pais: String!
+    countryInfo: CountryInfo
+    fechaRegistro: String!
+    juegosComprados: [ID]
+    activo: Boolean!
+}
+
+type CountryInfo {
+    id: Int!
+    name: String!
+    abbreviation: String!
+    capital: String!
+    currency: String!
+    phone: String!
+    population: Int!
+    flag: String!
+    emblem: String!
+    orthographic: String!
+}
+
+type Mutation {
+    createUser(user: NewUserInput!): String!
+    updateUser(_id: ID!, user: EditUserInput!): String!
+    deleteUser(_id: ID!): String!
+}
+
+type CountryValidationResult {
+    isValid: Boolean!
+    countryInfo: CountryInfo
+    suggestions: [String]
+    message: String!
+}
+
+input NewUserInput {
+    nombre: String!
+    email: String!
+    pais: String!
+}
+
+input EditUserInput {
+    nombre: String
+    email: String
+    pais: String
+    activo: Boolean
+}
