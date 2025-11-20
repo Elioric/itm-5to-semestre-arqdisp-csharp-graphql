@@ -100,7 +100,6 @@ query {
     countryInfo {
       name
       capital
-      currency
     }
   }
 }
@@ -117,11 +116,6 @@ query {
     fechaRegistro
     countryInfo {
       name
-      abbreviation
-      capital
-      currency
-      population
-      flag
     }
   }
 }
