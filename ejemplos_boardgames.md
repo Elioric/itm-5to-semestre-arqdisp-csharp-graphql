@@ -2,7 +2,7 @@
 
 Este archivo contiene ejemplos prácticos de todas las operaciones disponibles para gestionar juegos de mesa.
 
-## URL del GraphQL Playground
+## URL del GraphQL Playground en Contenedor
 http://localhost:37111/graphql
 
 ---

@@ -6,9 +6,9 @@ const options = {
   } as MongoClientOptions;
   
 export default class MongoLib {
-    private client: MongoClient
-    private dbName: any= config.dbName;
-    private mongoUri: any= config.mongoUrl;
+    private readonly client: MongoClient
+    private readonly dbName: string = config.dbName || 'boardgamesdb';
+    private readonly mongoUri: string = config.mongoUrl || 'mongodb://admin:secret@localhost:27017';
     private static connection: Db
     /**
      *
@@ -24,9 +24,15 @@ export default class MongoLib {
                 console.log('Connected successfully to mongo');
                 MongoLib.connection = this.client.db(this.dbName)
             } catch (error) {
-                console.log(error);
+                console.error('Failed to connect to MongoDB:', error);
+                throw new Error('MongoDB connection failed');
             }
         }
+        
+        if (!MongoLib.connection) {
+            throw new Error('MongoDB connection is not available');
+        }
+        
         return MongoLib.connection
     }
 }

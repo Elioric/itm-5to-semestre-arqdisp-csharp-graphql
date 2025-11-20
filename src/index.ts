@@ -4,9 +4,13 @@ import { ApolloServer } from "apollo-server-express";
 import { schema } from "./graphql";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core"
 import MongoLib from "./mongo";
+import config from "./config";
 
-const app: Application = express();  // <--- Cambiado a Application
+const app: Application = express();  
 app.use(cors());
+
+// Crear una instancia única de MongoDB
+const mongoLib = new MongoLib();
 
 const server = new ApolloServer({
     schema,
@@ -14,15 +18,36 @@ const server = new ApolloServer({
     plugins: [
         ApolloServerPluginLandingPageGraphQLPlayground()
     ],
-    context: async () => new MongoLib().connect()
+    context: async () => {
+        try {
+            const db = await mongoLib.connect();
+            return db;
+        } catch (error) {
+            console.error('Error connecting to database in context:', error);
+            throw new Error('Database connection failed');
+        }
+    }
 })
 
 
-server.start().then(res => {
-    server.applyMiddleware({ app });
+async function startServer() {
+    try {
+        // Verificar conexión a MongoDB antes de iniciar el servidor
+        await mongoLib.connect();
+        console.log('✅ MongoDB connection verified');
+        
+        // Iniciar Apollo Server
+        await server.start();
+        server.applyMiddleware({ app });
 
-    app.listen({ port: 4000 }, () => {
-        console.log(`🚀 Server ready at http://localhost:${4000}${server.graphqlPath}`);
-    });
+        const port = config.port;
+        app.listen({ port }, () => {
+            console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`);
+        });
+    } catch (error) {
+        console.error('❌ Failed to start server:', error);
+        process.exit(1);
+    }
+}
 
-})
+startServer();

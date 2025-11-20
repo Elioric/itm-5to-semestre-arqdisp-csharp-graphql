@@ -6,7 +6,7 @@
   "scripts": {
     "compile": "tsc",
     "start": "ts-node ./src/index.ts",
-    "dev": "nodemon src/index.ts --exec ts-node src/index.ts -e ts,graphql"
+    "dev": "nodemon --exec ts-node src/index.ts -e ts,graphql"
   },
   "author": "",
   "license": "ISC",

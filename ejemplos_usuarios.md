@@ -13,13 +13,7 @@ http://localhost:37111/graphql
 ```graphql
 query {
   getAllCountries {
-    id
     name
-    abbreviation
-    capital
-    currency
-    population
-    flag
   }
 }
 ```
@@ -34,7 +28,6 @@ query {
     capital
     currency
     phone
-    population
     flag
     emblem
     orthographic
@@ -53,6 +46,7 @@ query {
       currency
     }
     message
+    suggestions
   }
 }
 ```
@@ -72,13 +66,23 @@ mutation {
 }
 ```
 
+```graphql
+mutation {
+  createUser(user: {
+    nombre: "Gerard Pique"
+    email: "nosoyshakifan@email.com"
+    pais: "Spain"
+  })
+}
+```
+
 ### 2.2 Crear usuario con país inválido (fallará)
 ```graphql
 mutation {
   createUser(user: {
     nombre: "María García"
     email: "maria.garcia@email.com"
-    pais: "España"
+    pais: "Neverland"
   })
 }
 ```
@@ -97,7 +101,6 @@ query {
       name
       capital
       currency
-      flag
     }
   }
 }
@@ -127,7 +130,7 @@ query {
 ### 2.5 Obtener usuarios por país
 ```graphql
 query {
-  getUsersByCountry(countryName: "United States") {
+  getUsersByCountry(countryName: "Spain") {
     _id
     nombre
     email
@@ -240,6 +243,7 @@ query {
   validateCountry(countryName: "Alemania") {
     isValid
     message
+    suggestions
   }
 }
 ```
